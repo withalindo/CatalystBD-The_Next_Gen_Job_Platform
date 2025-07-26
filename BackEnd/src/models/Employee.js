@@ -4,14 +4,14 @@ const employeeSchema = new mongoose.Schema({
 
     fullName: {
         type: String,
-        required: true,
+        // required: true,
     },
 
     googleId: {
         type: String,
     },
     linkedinId: {
-        type: String,
+        // type: String,
     },
     username: {
         type: String,
@@ -19,7 +19,7 @@ const employeeSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true,
+        // required: true,
         unique: true,
     },
     password: {
@@ -29,28 +29,28 @@ const employeeSchema = new mongoose.Schema({
     },
     phoneNumber: {
         type: String,
-        required: true,
+        // required: true,
     },
     collegeOrUniversity: {
         type: String,
-        required: true,
+        // required: true,
     },
     address: {
         type: String,
-        required: true,
+        // required: true,
     },
     district: {
         type: String,
-        required: true
+        // required: true
     },
     gender: {
         type: String,
         enum: ["Male", "Female", "Other"],
-        required: true
+        // required: true
     },
     birthdate: {
         type: Date,
-        required: true,
+        // required: true,
     },
     // profileImage: {
     //     type: String, // URL or path to the uploaded image

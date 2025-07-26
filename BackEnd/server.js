@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 import passport from "passport";
 import session from "express-session";
+import path from 'path'; // Import path module
+import { fileURLToPath } from 'url'; // Import for __dirname equivalent
 
 // Load environment variables first
 dotenv.config();
@@ -12,7 +14,7 @@ dotenv.config();
 import signupRoutes from "./src/routes/signupRoutes.js";
 import loginRoutes from "./src/routes/loginRoutes.js";
 import authRoutes from "./src/routes/authRoutes.js";
-import { postSignupEmpBody, uploadProfileImage  } from "../Controllers/postSignupEmpBodyController.js";
+import employeeProfileRoutes from "./src/routes/employeeProfileRoutes.js"; // Import the new route
 
 // Import Google authentication strategies
 import "./src/controllers/employeeGoogleAuth.js"; 
@@ -24,9 +26,18 @@ import "./src/controllers/companyLinkedInAuth.js";
 
 // Middlewares
 const app = express();
+
+// Get __dirname equivalent in ES Modules for serving static files
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve static files from the 'uploads' directory
+// This makes uploaded images accessible via URL (e.g., http://localhost:5000/uploads/image.jpg)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Session configuration
 app.use(
@@ -35,7 +46,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      secure: false, 
+      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
       maxAge: 24 * 60 * 60 * 1000 
     }
   })
@@ -65,7 +76,7 @@ app.get("/", (req, res) => {
 app.use("/api/signup", signupRoutes);
 app.use("/api", loginRoutes);
 app.use("/auth", authRoutes);
-app.use("/api/post-signup-emp-body", postSignupEmpBody);
+app.use("/api", employeeProfileRoutes); // Use the new employee profile routes
 
 // Error handling middleware
 app.use((err, req, res, next) => {

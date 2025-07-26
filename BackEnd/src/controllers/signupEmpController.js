@@ -24,10 +24,11 @@ export const signupEmployee = async (req, res) => {
 
         await newEmployee.save();
         res.status(201).json({message:"Successfully created a fresh employee account. All the best :)"});
-        
-    } catch (error) 
-    {
+        // Facing bugs
+        // res.redirect("http://localhost:5173/PostSignupEmp");
+
+    } catch (error) {
         console.error("Error creating employee:", error);
-        res.status(500).json({ message: "Internal server error. Our developer team is working hard to reslove the problem. Thanks for your Paiencet", error });        
+        res.status(500).json({ message: "Internal server error. Our developer team is working hard to resolve the problem. Thanks for your Patience", error });
     }
 };

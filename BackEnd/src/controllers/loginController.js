@@ -16,7 +16,7 @@ export const login = async (req, res) => {
         let userType = "employee";
 
         if (!user) {
-            user = await Company.findOne({ companyName: username }); // Use companyName for companies
+            user = await Company.findOne({ companyName: username }); 
             userType = "company";
         }
 
